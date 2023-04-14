@@ -1,46 +1,57 @@
 let firstOperand = [];
 let operator = ""
 let secondOperand = [];
-let displayVar
+let operationDisplayVar
 
 const oneButton = document.getElementById("1btn");
-oneButton.addEventListener("click", updateDisplay);
+oneButton.addEventListener("click", assignOperands);
 
 const twoButton = document.getElementById("2btn");
-twoButton.addEventListener("click", updateDisplay)
+twoButton.addEventListener("click", assignOperands)
 
 const plusButton = document.getElementById("plus-btn");
 plusButton.addEventListener("click", assignOperator)
 
-const display = document.getElementById("display");
+const operationDisplay = document.getElementById("operation-display");
 
 
-function updateDisplay(){
+function assignOperands() {
     if (operator === "") {
-        firstOperand.push(this.innerText)
-        display.innerText = firstOperand.join("")
+        firstOperand.push(this.innerText);
+        operationDisplayVar = firstOperand.join("")
+        updateOperationDisplay();
     } else if (operator != "") {
         secondOperand.push(this.innerText)
-        display.innerText = firstOperand.join("") + operator + secondOperand.join("");
+        operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+        updateOperationDisplay();
     }
 }
 
-function assignOperator(){
-    operator = this.innerText
-    display.innerText = firstOperand.join("") + operator
+function assignOperator() {
+    if (operator != this.innerText) {
+        operator = this.innerText
+        operationDisplayVar = operationDisplayVar + operator;
+        updateOperationDisplay();
+    }
+
 }
 
-function add(firstOperand,secondOperand) {
-    
+
+function updateOperationDisplay() {
+    operationDisplay.innerText = operationDisplayVar;
+};
+
+function add(firstOperand, secondOperand) {
+
 }
 
-console.log(firstOperand)
 
-function clear(){
-firstOperand = [];
-operator = ""
-secondOperand = [];
-displayVar = "";
+
+function clear() {
+    firstOperand = [];
+    operator = ""
+    secondOperand = [];
+    operationDisplayVar = "";
 }
 
 clear()
