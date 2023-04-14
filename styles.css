@@ -26,17 +26,7 @@ width: 34.5%;
   
 }
 
-#result-display {
-    display: flex;
-    justify-content: center;
-    margin: 0px;
-    height: 100px;
-    
-    
-    font-size: 20px;
-    border: solid 2px black;
-    width: 34.5%; 
-}
+
 
 
 
