@@ -21,27 +21,34 @@ const operationDisplay = document.getElementById("operation-display");
 
 const resultDisplay = document.getElementById("result-display");
 
-//lets user choose operands. On first round user chooses the first number, upon further operations the result of the operation is used for the first number.
+
 function assignOperands() {
+    //lets first number input be used as first operand
     if (operator === "" && result == undefined) {
+        console.log("assignOperands if 1")
         firstOperand.push(this.innerText);
         operationDisplayVar = firstOperand.join("")
         updateOperationDisplay();
+        //allows user to enter operator before first operands ex: +1 = 0+1 also allows user to repeat operation with only = button
     } else if (operator != "" && firstOperand.length == 0) {
+        console.log("assignOperands if 2")
         firstOperand = [0];
         secondOperand.push(this.innerText)
         operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
         updateOperationDisplay();
-
-    } else if (operator != "" && firstOperand.length >0) {
+        // allows user to set second Operand if firstOperand and operator are chosen
+    } else if (operator != "" && firstOperand.length > 0) {
+        console.log("assignOperands if 3")
         secondOperand.push(this.innerText)
         operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
-        updateOperationDisplay();  
+        updateOperationDisplay();
+        /*//
     } else if (operator != "" && result != undefined) {
+        console.log("assignOperands if 4")
         secondOperand.push(this.innerText)
         operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
         updateOperationDisplay()
-
+*/
     }
 }
 
@@ -72,6 +79,8 @@ function updateOperationDisplay() {
 function operate() {
     if (operator == "") {
         console.log("no operator")
+    } else if (operator != "" && firstOperand.length == 0 && secondOperand.length == 0) {
+        console.log("no operands")
     } else if (operator === "+") {
         result = arrayToInt(firstOperand) + arrayToInt(secondOperand)
         operationDisplayVar = result;
@@ -82,7 +91,7 @@ function operate() {
     } else if (operator != "" && firstOperand.length == 0 && secondOperand.length == 0) {
         console.log("no operands")
     }
-    
+
 
 };
 
