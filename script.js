@@ -40,7 +40,12 @@ function assignOperator() {
         operator = this.innerText
         operationDisplayVar = operationDisplayVar + operator;
         updateOperationDisplay();
-    }
+    } else if (operator == this.innerText) {
+        console.log("second if")
+        operationDisplayVar = operationDisplayVar + operator;
+        updateOperationDisplay();
+        secondOperand = [];
+}
 }
 
 
@@ -54,9 +59,9 @@ function operate() {
         result = arrayToInt(firstOperand) + arrayToInt(secondOperand)
         operationDisplayVar = result;
         updateOperationDisplay();
-        operator = "";
+        //operator = "";
         firstOperand = [result];
-        secondOperand = [];
+        //secondOperand = [];
     }
 
 };
