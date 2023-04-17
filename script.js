@@ -27,16 +27,27 @@ function assignOperands() {
         firstOperand.push(this.innerText);
         operationDisplayVar = firstOperand.join("")
         updateOperationDisplay();
-    } else if (operator != "") {
+    } else if (operator != "" && firstOperand.length == 0) {
+        firstOperand = [0];
         secondOperand.push(this.innerText)
         operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
         updateOperationDisplay();
+
+    } else if (operator != "" && firstOperand.length >0) {
+        secondOperand.push(this.innerText)
+        operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+        updateOperationDisplay();  
+    } else if (operator != "" && result != undefined) {
+        secondOperand.push(this.innerText)
+        operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+        updateOperationDisplay()
+
     }
 }
 
 //lets operate func know which operation to perform
 function assignOperator() {
-    if (operator != this.innerText) {
+    if (operator != this.innerText && firstOperand.length > 0) {
         operator = this.innerText
         operationDisplayVar = operationDisplayVar + operator;
         updateOperationDisplay();
@@ -45,8 +56,12 @@ function assignOperator() {
         operationDisplayVar = operationDisplayVar + operator;
         updateOperationDisplay();
         secondOperand = [];
-}
-}
+    } else if (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined) {
+        operator = this.innerText;
+        operationDisplayVar = "";
+        updateOperationDisplay()
+    }
+};
 
 
 function updateOperationDisplay() {
@@ -55,14 +70,19 @@ function updateOperationDisplay() {
 
 //does operation based on operator then resets operator
 function operate() {
-    if (operator === "+") {
+    if (operator == "") {
+        console.log("no operator")
+    } else if (operator === "+") {
         result = arrayToInt(firstOperand) + arrayToInt(secondOperand)
         operationDisplayVar = result;
         updateOperationDisplay();
         //operator = "";
         firstOperand = [result];
         //secondOperand = [];
+    } else if (operator != "" && firstOperand.length == 0 && secondOperand.length == 0) {
+        console.log("no operands")
     }
+    
 
 };
 
