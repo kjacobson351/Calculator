@@ -4,6 +4,7 @@ let secondOperand = [];
 let operationDisplayVar = "";
 let result
 let justOperated = false;
+let timesRan = 0;
 
 
 
@@ -78,6 +79,7 @@ function assignOperands() {
             secondOperand.push(this.innerText)
             operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
             updateOperationDisplay();
+            //timesRan = 0;
             break;
 
 
@@ -124,15 +126,9 @@ function assignOperator() {
             justOperated = false;
             operationDisplayVar = operationDisplayVar + operator;
             updateOperationDisplay();
+            timesRan = 0;
             break;
 
-        /*
-        case (operator == this.innerText && operationDisplayVar.includes("+")) :
-            console.log(operator)
-            //operationDisplayVar = operationDisplayVar + operator;
-            updateOperationDisplay();
-            secondOperand = [];
-            break;*/
 
         case (operator == this.innerText):
             console.log("assign Op 2nd if")
@@ -140,6 +136,7 @@ function assignOperator() {
             justOperated = false;
             updateOperationDisplay();
             secondOperand = [];
+            timesRan = 0;
             break;
 
         case (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined):
@@ -148,6 +145,7 @@ function assignOperator() {
             operationDisplayVar = "";
             operationDisplayVar = operationDisplayVar + operator;
             justOperated = false;
+            timesRan = 0;
             updateOperationDisplay()
             break;
     }
@@ -157,7 +155,7 @@ function assignOperator() {
 function updateOperationDisplay() {
     operationDisplay.innerText = operationDisplayVar;
 };
-
+/*
 //does operation based on operator then resets operator
 function operate() {
     if (operator == "") {
@@ -175,9 +173,53 @@ function operate() {
     } else if (operator != "" && firstOperand.length == 0 && secondOperand.length == 0) {
         console.log("no operands")
     }
-
-
 };
+*/
+
+function operate() {
+    switch (true) {
+        case (operator == ""):
+            console.log("no operator")
+            break;
+
+        case (operator != "" && firstOperand.length == 0 && secondOperand.length == 0):
+            console.log("no operands")
+            break;
+
+        case (operator === "+" && secondOperand.length == 0):
+            if (timesRan == 0) {
+                console.log("+=")
+                result = arrayToInt(firstOperand);
+                timesRan++;
+                operationDisplayVar = result;
+                updateOperationDisplay();
+                justOperated = true;
+                firstOperand = [result];
+            } else if (timesRan > 0) {
+                console.log("+=")
+                result = arrayToInt(firstOperand) + (arrayToInt(firstOperand) / timesRan);
+                timesRan++;
+                operationDisplayVar = result;
+                updateOperationDisplay();
+                justOperated = true;
+                firstOperand = [result];
+            }
+
+
+            break;
+
+        case (operator === "+"):
+            console.log("summed")
+            result = arrayToInt(firstOperand) + arrayToInt(secondOperand)
+            operationDisplayVar = result
+            updateOperationDisplay();
+            justOperated = true;
+            firstOperand = [result];
+            break;
+
+
+    }
+}
 
 //
 function arrayToInt(array) {
@@ -194,6 +236,7 @@ function reset() {
     result = undefined;
     justOperated = "false"
     updateOperationDisplay();
+    timesRan = 0;
 }
 
 
