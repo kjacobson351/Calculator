@@ -1,7 +1,7 @@
 let firstOperand = [];
 let operator = ""
 let secondOperand = [];
-let operationDisplayVar;
+let operationDisplayVar = "";
 let result
 let justOperated = false;
 
