@@ -17,6 +17,9 @@ twoButton.addEventListener("click", assignOperands)
 const plusButton = document.getElementById("plus-btn");
 plusButton.addEventListener("click", assignOperator)
 
+const decButton = document.getElementById("dec-btn");
+decButton.addEventListener("click", assignOperands)
+
 const clearButton = document.getElementById("clear-btn")
 clearButton.addEventListener("click", reset);
 
@@ -56,6 +59,10 @@ function assignOperand() {
 function assignOperands() {
     switch (true) {
         //first input is firstOperand
+
+        /*case (operationDisplayVar.includes(this.innerText)):
+            console.log("operator already chosen")
+            break*/
 
         case (justOperated === true):
             reset();
@@ -119,6 +126,7 @@ function assignOperator() {
 */
 function assignOperator() {
     switch (true) {
+        
 
         case (operator != this.innerText):
             console.log("assign Op 1st if")
@@ -129,8 +137,7 @@ function assignOperator() {
             timesRan = 0;
             break;
 
-
-        case (operator == this.innerText):
+         case (operator == this.innerText && result != undefined):
             console.log("assign Op 2nd if")
             operationDisplayVar = operationDisplayVar + operator;
             justOperated = false;
@@ -138,6 +145,18 @@ function assignOperator() {
             secondOperand = [];
             timesRan = 0;
             break;
+
+
+        case (operator == this.innerText):
+            console.log("assign Op 2nd if")
+            //operationDisplayVar = operationDisplayVar + operator;
+            justOperated = false;
+            updateOperationDisplay();
+            secondOperand = [];
+            timesRan = 0;
+            break;
+
+            
 
         case (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined):
             console.log("assign Op 3rd if")
@@ -189,7 +208,8 @@ function operate() {
         case (operator === "+" && secondOperand.length == 0):
             if (timesRan == 0) {
                 console.log("+=")
-                result = arrayToInt(firstOperand);
+                result = arrayToInt(firstOperand)
+                result = result.toFixed(2);
                 timesRan++;
                 operationDisplayVar = result;
                 updateOperationDisplay();
@@ -198,19 +218,19 @@ function operate() {
             } else if (timesRan > 0) {
                 console.log("+=")
                 result = arrayToInt(firstOperand) + (arrayToInt(firstOperand) / timesRan);
+                result = result.toFixed(2)
                 timesRan++;
                 operationDisplayVar = result;
                 updateOperationDisplay();
                 justOperated = true;
                 firstOperand = [result];
             }
-
-
             break;
 
         case (operator === "+"):
             console.log("summed")
             result = arrayToInt(firstOperand) + arrayToInt(secondOperand)
+            result = result.toFixed(2)
             operationDisplayVar = result
             updateOperationDisplay();
             justOperated = true;
