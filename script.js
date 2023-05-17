@@ -193,6 +193,7 @@ function togglePlusMinus() {
             break;
         //changes first operand to positive if its active and negative
         case (currentOperand === 1 && arrayToInt(firstOperand) < 0):
+            firstOperand = arrayToInt(firstOperand)
             firstOperand = [firstOperand *= -1];
             operationDisplayVar = firstOperand.join("")
             updateOperationDisplay();
@@ -205,6 +206,7 @@ function togglePlusMinus() {
                 break;
             //changes second operand to positive if its active and negative
         case (currentOperand === 2 && arrayToInt(secondOperand) < 0):
+            secondOperand = arrayToInt(secondOperand);
             secondOperand = [secondOperand *= -1];
             operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
             updateOperationDisplay();
