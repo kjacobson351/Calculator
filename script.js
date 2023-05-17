@@ -5,6 +5,7 @@ let operationDisplayVar = "";
 let result
 let justOperated = false;
 let timesRan = 0;
+let currentOperand = "";
 
 const zeroButton = document.getElementById("0btn");
 zeroButton.addEventListener("click", assignOperands);
@@ -36,13 +37,16 @@ eightButton.addEventListener("click", assignOperands);
 const nineButton = document.getElementById("9btn");
 nineButton.addEventListener("click", assignOperands);
 
+const decButton = document.getElementById("dec-btn");
+decButton.addEventListener("click", assignOperands)
+
 
 
 const plusButton = document.getElementById("plus-btn");
 plusButton.addEventListener("click", assignOperator)
 
-const decButton = document.getElementById("dec-btn");
-decButton.addEventListener("click", assignOperands)
+const plusMinusButton = document.getElementById("plus-minus-btn")
+plusMinusButton.addEventListener("click", togglePlusMinus)
 
 const clearButton = document.getElementById("clear-btn")
 clearButton.addEventListener("click", reset);
@@ -58,12 +62,13 @@ const resultDisplay = document.getElementById("result-display");
 
 function assignOperands() {
     switch (true) {
-       
+
 
         //allows user to start a new operation by pressing a new number after an operation.
         case (justOperated === true):
             reset();
             firstOperand.push(this.innerText);
+            currentOperand = 1;
             operationDisplayVar = firstOperand.join("")
             console.log("new operation")
             updateOperationDisplay();
@@ -73,6 +78,7 @@ function assignOperands() {
         case (operator === "" && result == undefined):
             console.log("first operand assigned / updated")
             firstOperand.push(this.innerText);
+            currentOperand = 1;
             operationDisplayVar = firstOperand.join("")
             updateOperationDisplay();
             break;
@@ -82,6 +88,7 @@ function assignOperands() {
             console.log("first operand = 0, first digit of second operand assigned")
             firstOperand = [0];
             secondOperand.push(this.innerText)
+            currentOperand = 2;
             operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
             updateOperationDisplay();
             //timesRan = 0;
@@ -91,6 +98,7 @@ function assignOperands() {
         case (operator != "" && firstOperand.length > 0):
             console.log("second operand assigned / updated")
             secondOperand.push(this.innerText)
+            currentOperand = 2;
             operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
             updateOperationDisplay();
             break;
@@ -123,65 +131,87 @@ function assignOperator() {
 };
 */
 
-function onlyOneOperator(){
-    if (operationDisplayVar.includes(this.innerText) === false) {
-        console.log("TEST")
-        assignOperator();
-    } else if (operationDisplayVar.includes(this.innerText) === true) {
-        console.log("Op already in display")
-    }       
-    
-}
 
 function assignOperator() {
     if (operationDisplayVar.includes(this.innerText)) {
         console.log("operator already in display")
     } else
-    switch (true) {
-        
+        switch (true) {
 
-        case (operator != this.innerText):
-            console.log("operator assigned")
-            operator = this.innerText
-            justOperated = false;
-            operationDisplayVar = operationDisplayVar + operator;
-            updateOperationDisplay();
-            timesRan = 0;
-            break;
+
+            case (operator != this.innerText):
+                console.log("operator assigned")
+                operator = this.innerText
+                justOperated = false;
+                operationDisplayVar = operationDisplayVar + operator;
+                updateOperationDisplay();
+                timesRan = 0;
+                break;
 
             //allows display to update the operator to the display after the result of an operation
-         case (operator == this.innerText && result != undefined):
-            console.log("new operation operator assigned")
-            operationDisplayVar = operationDisplayVar + operator;
-            justOperated = false;
+            case (operator == this.innerText && result != undefined):
+                console.log("new operation operator assigned")
+                operationDisplayVar = operationDisplayVar + operator;
+                justOperated = false;
+                updateOperationDisplay();
+                secondOperand = [];
+                timesRan = 0;
+                break;
+
+            /*// below code is now redunant...i think...
+                    case (operator == this.innerText):
+                        console.log("assign Op 2nd if")
+                        //operationDisplayVar = operationDisplayVar + operator;
+                        justOperated = false;
+                        updateOperationDisplay();
+                        secondOperand = [];
+                        timesRan = 0;
+                        break;
+            
+                        */
+            /*
+                    case (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined):
+                        console.log("assign Op 3rd if")
+                        operator = this.innerText;
+                        operationDisplayVar = "";
+                        operationDisplayVar = operationDisplayVar + operator;
+                        justOperated = false;
+                        timesRan = 0;
+                        updateOperationDisplay()
+                        break;
+                        */
+        }
+}
+
+function togglePlusMinus() {
+    switch (true) {
+        //changes first operand to negative if it is active and positive
+        case (currentOperand === 1 && arrayToInt(firstOperand) > 0):
+            firstOperand.unshift("-");
+            operationDisplayVar = firstOperand.join("")
             updateOperationDisplay();
-            secondOperand = [];
-            timesRan = 0;
+            break;
+        //changes first operand to positive if its active and negative
+        case (currentOperand === 1 && arrayToInt(firstOperand) < 0):
+            firstOperand = [firstOperand *= -1];
+            operationDisplayVar = firstOperand.join("")
+            updateOperationDisplay();
+            break;
+        //changes second operand to negative if it is active and positive
+            case (currentOperand === 2 && arrayToInt(secondOperand) > 0):
+                secondOperand.unshift("-");
+                operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+                updateOperationDisplay();
+                break;
+            //changes second operand to positive if its active and negative
+        case (currentOperand === 2 && arrayToInt(secondOperand) < 0):
+            secondOperand = [secondOperand *= -1];
+            operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+            updateOperationDisplay();
             break;
 
-/*// below code is now redunant...i think...
-        case (operator == this.innerText):
-            console.log("assign Op 2nd if")
-            //operationDisplayVar = operationDisplayVar + operator;
-            justOperated = false;
-            updateOperationDisplay();
-            secondOperand = [];
-            timesRan = 0;
-            break;
-
-            */
-/*
-        case (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined):
-            console.log("assign Op 3rd if")
-            operator = this.innerText;
-            operationDisplayVar = "";
-            operationDisplayVar = operationDisplayVar + operator;
-            justOperated = false;
-            timesRan = 0;
-            updateOperationDisplay()
-            break;
-            */
     }
+
 }
 
 
@@ -215,6 +245,7 @@ function operate() {
                 updateOperationDisplay();
                 justOperated = true;
                 firstOperand = [result];
+                currentOperand = 1;
             } else if (timesRan > 0) {
                 console.log("+=")
                 result = arrayToInt(firstOperand) + (arrayToInt(firstOperand) / timesRan);
@@ -224,9 +255,11 @@ function operate() {
                 updateOperationDisplay();
                 justOperated = true;
                 firstOperand = [result];
+                currentOperand = 1;
             }
             break;
 
+        //
         case (operator === "+"):
             console.log("summed")
             result = arrayToInt(firstOperand) + arrayToInt(secondOperand)
@@ -235,9 +268,8 @@ function operate() {
             updateOperationDisplay();
             justOperated = true;
             firstOperand = [result];
+            currentOperand = 1;
             break;
-
-
     }
 }
 
