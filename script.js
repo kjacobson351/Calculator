@@ -6,6 +6,7 @@ let result
 let justOperated = false;
 let timesRan = 0;
 let currentOperand = "";
+let thissy;
 
 const zeroButton = document.getElementById("0btn");
 zeroButton.addEventListener("click", assignOperands);
@@ -58,49 +59,52 @@ const operationDisplay = document.getElementById("operation-display");
 
 const resultDisplay = document.getElementById("result-display");
 
+///////Helper functions for assignOperands()/////
+function updateFirstOperand() {
+    firstOperand.push(thissy);
+    currentOperand = 1;
+    operationDisplayVar = firstOperand.join("")
+    updateOperationDisplay();
+}
 
+function updateSecondOperand() {
+    secondOperand.push(thissy)
+    currentOperand = 2;
+    operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+    updateOperationDisplay();
+}
+/////////////////////////////////////////////////
 
 function assignOperands() {
     switch (true) {
-
-
         //allows user to start a new operation by pressing a new number after an operation.
         case (justOperated === true):
             reset();
-            firstOperand.push(this.innerText);
-            currentOperand = 1;
-            operationDisplayVar = firstOperand.join("")
+            thissy = this.innerText;
+            updateFirstOperand()
             console.log("new operation")
-            updateOperationDisplay();
-
             break;
+
         //assigns first operand
         case (operator === "" && result == undefined):
+            thissy = this.innerText;
+            updateFirstOperand()
             console.log("first operand assigned / updated")
-            firstOperand.push(this.innerText);
-            currentOperand = 1;
-            operationDisplayVar = firstOperand.join("")
-            updateOperationDisplay();
             break;
 
         //lets user enter operator first
         case (operator != "" && firstOperand.length == 0):
-            console.log("first operand = 0, first digit of second operand assigned")
             firstOperand = [0];
-            secondOperand.push(this.innerText)
-            currentOperand = 2;
-            operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
-            updateOperationDisplay();
-            //timesRan = 0;
+            thissy = this.innerText;
+            updateSecondOperand()
+            console.log("first operand = 0, first digit of second operand assigned")
             break;
 
-
+        //assigns second operand
         case (operator != "" && firstOperand.length > 0):
+            thissy = this.innerText
+            updateSecondOperand()
             console.log("second operand assigned / updated")
-            secondOperand.push(this.innerText)
-            currentOperand = 2;
-            operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
-            updateOperationDisplay();
             break;
     }
 }
@@ -199,12 +203,12 @@ function togglePlusMinus() {
             updateOperationDisplay();
             break;
         //changes second operand to negative if it is active and positive
-            case (currentOperand === 2 && arrayToInt(secondOperand) > 0):
-                secondOperand.unshift("-");
-                operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
-                updateOperationDisplay();
-                break;
-            //changes second operand to positive if its active and negative
+        case (currentOperand === 2 && arrayToInt(secondOperand) > 0):
+            secondOperand.unshift("-");
+            operationDisplayVar = firstOperand.join("") + operator + secondOperand.join("");
+            updateOperationDisplay();
+            break;
+        //changes second operand to positive if its active and negative
         case (currentOperand === 2 && arrayToInt(secondOperand) < 0):
             secondOperand = arrayToInt(secondOperand);
             secondOperand = [secondOperand *= -1];
