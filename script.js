@@ -7,6 +7,7 @@ let justOperated = false;
 let timesRan = 0;
 let currentOperand = "";
 let thissy;
+let preveiousOperator = ""
 
 const zeroButton = document.getElementById("0btn");
 zeroButton.addEventListener("click", assignOperands);
@@ -44,7 +45,10 @@ decButton.addEventListener("click", assignOperands)
 
 
 const plusButton = document.getElementById("plus-btn");
-plusButton.addEventListener("click", assignOperator)
+plusButton.addEventListener("click", assignOperator);
+
+const minusButton = document.getElementById("minus-btn");
+minusButton.addEventListener("click", assignOperator)
 
 const plusMinusButton = document.getElementById("plus-minus-btn")
 plusMinusButton.addEventListener("click", togglePlusMinus)
@@ -100,44 +104,38 @@ function assignOperands() {
             console.log("first operand = 0, first digit of second operand assigned")
             break;
 
+            //escapes the data saved for += functionality and assigns the second operand.
+            case (operator != preveiousOperator && firstOperand.length > 0):
+                thissy = this.innerText
+                secondOperand = [];
+                updateSecondOperand()
+                preveiousOperator = operator;
+            console.log("second operand reset and assigned")
+            break;
+
+            
         //assigns second operand
         case (operator != "" && firstOperand.length > 0):
-            thissy = this.innerText
+           thissy = this.innerText;
             updateSecondOperand()
-            console.log("second operand assigned / updated")
+            console.log("second operand updated")
             break;
-    }
-}
 
-/*
-//lets operate func know which operation to perform
-function assignOperator() {
-    //assigns Operator if first operand is already chosen
-    if (operator != this.innerText && firstOperand.length > 0) {
-        console.log("assign Op 1st if")
-        operator = this.innerText
-        operationDisplayVar = operationDisplayVar + operator;
-        updateOperationDisplay();
-        //will not add an additional operator to screen if user clicks twice
-    } else if (operator == this.innerText) {
-        console.log("assign Op 2nd if")
-        //operationDisplayVar = operationDisplayVar + operator;
-        updateOperationDisplay();
-        secondOperand = [];
+                
+            }
+            
 
-    }else if (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined) {
-        console.log("assign Op 3rd if")
-        operator = this.innerText;
-        operationDisplayVar = "";
-        operationDisplayVar = operationDisplayVar + operator;
-        updateOperationDisplay()
+      
+        
     }
-};
-*/
+
+
+
 
 
 function assignOperator() {
-    if (operationDisplayVar.includes(this.innerText)) {
+    //stops spamming of operator while allowing a minus and subtract to be in the display at the same time.
+    if (operationDisplayVar.includes(this.innerText + this.innerText)) {
         console.log("operator already in display")
     } else
         switch (true) {
@@ -162,28 +160,6 @@ function assignOperator() {
                 timesRan = 0;
                 break;
 
-            /*// below code is now redunant...i think...
-                    case (operator == this.innerText):
-                        console.log("assign Op 2nd if")
-                        //operationDisplayVar = operationDisplayVar + operator;
-                        justOperated = false;
-                        updateOperationDisplay();
-                        secondOperand = [];
-                        timesRan = 0;
-                        break;
-            
-                        */
-            /*
-                    case (firstOperand.length == 0 && secondOperand.length == 0 && result == undefined):
-                        console.log("assign Op 3rd if")
-                        operator = this.innerText;
-                        operationDisplayVar = "";
-                        operationDisplayVar = operationDisplayVar + operator;
-                        justOperated = false;
-                        timesRan = 0;
-                        updateOperationDisplay()
-                        break;
-                        */
         }
 }
 
@@ -252,6 +228,7 @@ function operate() {
                 justOperated = true;
                 firstOperand = [result];
                 currentOperand = 1;
+                preveiousOperator = "+"
             } else if (timesRan > 0) {
                 console.log("+=")
                 result = arrayToInt(firstOperand) + (arrayToInt(firstOperand) / timesRan);
@@ -262,6 +239,7 @@ function operate() {
                 justOperated = true;
                 firstOperand = [result];
                 currentOperand = 1;
+                preveiousOperator = "+";
             }
             break;
 
@@ -275,6 +253,47 @@ function operate() {
             justOperated = true;
             firstOperand = [result];
             currentOperand = 1;
+            preveiousOperator = "+"
+            break;
+///////SUBTRACTION//////////
+            //allows += functionality ex 1+=
+        case (operator === "-" && secondOperand.length == 0):
+            if (timesRan == 0) {
+                console.log("-=")
+                firstOperand.unshift("-")
+                result = arrayToInt(firstOperand)
+                result = Math.round(result * 1000) / 1000
+                timesRan++;
+                operationDisplayVar = result.toString();
+                updateOperationDisplay();
+                justOperated = true;
+                firstOperand = [result];
+                currentOperand = 1;
+                preveiousOperator = "-";
+            } else if (timesRan > 0) {
+                console.log("-=2")
+                result = arrayToInt(firstOperand) - (arrayToInt(firstOperand) / timesRan);
+                result = Math.round(result * 1000) / 1000
+                timesRan++;
+                operationDisplayVar = result.toString();
+                updateOperationDisplay();
+                justOperated = true;
+                firstOperand = [result];
+                currentOperand = 1;
+                preveiousOperator = "-";
+            }
+            break;
+
+        case (operator === "-"):
+            console.log("subtracted")
+            result = arrayToInt(firstOperand) - arrayToInt(secondOperand)
+            result = Math.round(result * 1000) / 1000
+            operationDisplayVar = result.toString()
+            updateOperationDisplay();
+            justOperated = true;
+            firstOperand = [result];
+            currentOperand = 1;
+            preveiousOperator = "-";
             break;
     }
 }
@@ -295,6 +314,7 @@ function reset() {
     justOperated = "false"
     updateOperationDisplay();
     timesRan = 0;
+    preveiousOperator = "";
 }
 
 
