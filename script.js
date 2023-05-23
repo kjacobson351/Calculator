@@ -50,6 +50,9 @@ plusButton.addEventListener("click", assignOperator);
 const minusButton = document.getElementById("minus-btn");
 minusButton.addEventListener("click", assignOperator)
 
+const timesButton = document.getElementById("xbtn");
+timesButton.addEventListener("click", assignOperator)
+
 const plusMinusButton = document.getElementById("plus-minus-btn")
 plusMinusButton.addEventListener("click", togglePlusMinus)
 
@@ -215,7 +218,7 @@ function operate() {
         case (operator != "" && firstOperand.length == 0 && secondOperand.length == 0):
             console.log("no operands")
             break;
-
+///////addition/////////////////////
         //allows += functionality ex 1+=
         case (operator === "+" && secondOperand.length == 0):
             if (timesRan == 0) {
@@ -256,7 +259,7 @@ function operate() {
             preveiousOperator = "+"
             break;
 ///////SUBTRACTION//////////
-            //allows += functionality ex 1+=
+            //allows -= functionality ex 1-=
         case (operator === "-" && secondOperand.length == 0):
             if (timesRan == 0) {
                 console.log("-=")
@@ -295,6 +298,46 @@ function operate() {
             currentOperand = 1;
             preveiousOperator = "-";
             break;
+
+///////////multiplication/////////////////
+            //allows x= functionality ex 1x=
+            case (operator === "X" && secondOperand.length == 0):
+                if (timesRan == 0) {
+                    console.log("x=")
+                    result = arrayToInt(firstOperand) * arrayToInt(firstOperand);
+                    result = Math.round(result * 1000) / 1000
+                    timesRan++;
+                    operationDisplayVar = result.toString();
+                    updateOperationDisplay();
+                    justOperated = true;
+                    firstOperand = [result];
+                    currentOperand = 1;
+                    preveiousOperator = "X";
+                } else if (timesRan > 0) {
+                    console.log("X=2")
+                    result = arrayToInt(firstOperand) * thissy;
+                    result = Math.round(result * 1000) / 1000
+                    timesRan++;
+                    operationDisplayVar = result.toString();
+                    updateOperationDisplay();
+                    justOperated = true;
+                    firstOperand = [result];
+                    currentOperand = 1;
+                    preveiousOperator = "X";
+                }
+                break;
+    
+            case (operator === "X"):
+                console.log("Multiplied")
+                result = arrayToInt(firstOperand) * arrayToInt(secondOperand)
+                result = Math.round(result * 1000) / 1000
+                operationDisplayVar = result.toString()
+                updateOperationDisplay();
+                justOperated = true;
+                firstOperand = [result];
+                currentOperand = 1;
+                preveiousOperator = "X";
+                break;
     }
 }
 
