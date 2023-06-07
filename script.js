@@ -327,7 +327,7 @@ function operate() {
 
         ///////////MULTIPLICATION/////////////////
         //allows x= functionality ex 1x=
-        case (operator === "X" && secondOperand.length == 0):
+        case (operator === "✕" && secondOperand.length == 0):
             if (timesRan == 0) {
                 console.log("x=");
                 result = arrayToInt(firstOperand) * arrayToInt(firstOperand);
@@ -338,9 +338,9 @@ function operate() {
                 justOperated = true;
                 firstOperand = [result];
                 currentOperand = 1;
-                preveiousOperator = "X";
+                preveiousOperator = "✕";
             } else if (timesRan > 0) {
-                console.log("X=2");
+                console.log("✕=2");
                 result = arrayToInt(firstOperand) * thissy;
                 result = Math.round(result * 1000) / 1000;
                 timesRan++;
@@ -349,11 +349,11 @@ function operate() {
                 justOperated = true;
                 firstOperand = [result];
                 currentOperand = 1;
-                preveiousOperator = "X";
+                preveiousOperator = "✕";
             }
             break;
 
-        case (operator === "X"):
+        case (operator === "✕"):
             console.log("Multiplied");
             result = arrayToInt(firstOperand) * arrayToInt(secondOperand);
             result = Math.round(result * 1000) / 1000;
@@ -362,7 +362,7 @@ function operate() {
             justOperated = true;
             firstOperand = [result];
             currentOperand = 1;
-            preveiousOperator = "X";
+            preveiousOperator = "✕";
             break;
         ////////DIVISION///////////////
         //allows ÷= functionality ex 1÷=

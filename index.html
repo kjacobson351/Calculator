@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300&family=Press+Start+2P&family=Roboto:ital,wght@0,100;0,300;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css" />
     <title>JS Calculator</title>
-</head>
-<body>
-    <div class="container">
+  </head>
+  <body>
+    
+      <div class="calculator">
+        <div class = "wrapper"> <H3>Montana Instruments</H3>
+        
         <div class="display-container">
-        <div id="operator-selection"></div>
-        <div id="operation-display"></div>
-    </div>
-        <div class="calculator-wrapper">
-            
-                <div class ="buttons-column1">
-                    <div class = "numbers"><button id="7btn">7</button></div>
-                    <div class = "numbers"><button id="4btn">4</button></div>
-                    <div class = "numbers"><button id="1btn">1</button></div>
-                    <div class = "clear"><button id="clear-btn">C</button></div>
-                </div>
-                <div class = "buttons-column2">
-                    <div class = "numbers"><button id="8btn">8</button></div>
-                    <div class = "numbers"><button id="5btn">5</button></div>
-                    <div class = "numbers"><button id="2btn">2</button></div>
-                    <div class = "numbers"><button id="0btn">0</button></div>
-                </div>
-                <div class ="buttons-column3">
-                    <div class = "numbers"><button id="9btn">9</button></div>
-                    <div class = "numbers"><button id="6btn">6</button></div>
-                    <div class = "numbers"><button id="3btn">3</button></div>
-                    <div class = "numbers"><button id="dec-btn">.</button></div>
-                </div>
-                <div class="buttons-column4">
-                    <div class = "operators"><button id="plus-minus-btn">+/-</button></div>
-                    <div class = "operators"><button id="xbtn">X</button></div>
-                    <div class = "operators"><button id="minus-btn">-</button></div>
-                    <div class = "operators"><button id="plus-btn">+</button></div>
-                </div>
-                <div class="buttons-column5">
-                    <div class = "operators"><button id="back-spacebtn">⎌</button></div>
-                    <div class = "operators"><button id="divide-btn">÷</button></div>
-                    <div class = "operators"><button id="equals-btn">=</button></div>
-                </div>
-            
+          <div id="operation-display"></div>
         </div>
-    </div>
+        <div class="calculator-keys">
+          <button id="7btn">7</button>
+          <button id="8btn">8</button>
+          <button id="9btn">9</button>
+          <button id="plus-minus-btn" class ="function">+/-</button>
+          <button id="back-spacebtn" class = "function">⎌</button>
+
+          <button id="4btn">4</button>
+          <button id="5btn">5</button>
+          <button id="6btn">6</button>
+          <button id="xbtn" class="operator">✕</button>
+          <button id="divide-btn" class="operator">÷</button>
+
+          <button id="1btn">1</button>
+          <button id="2btn">2</button>
+          <button id="3btn">3</button>
+          <button id="minus-btn" class="operator">-</button>
+          <button class="equal-sign" id="equals-btn" class="operator">=</button>
+
+          <button id="clear-btn" class = "function">C</button>
+          <button id="0btn">0</button>
+          <button id="dec-btn">.</button>
+          <button id="plus-btn" class="operator">+</button>
+        </div>
+        </div>
+      </div>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
